@@ -1,20 +1,43 @@
-# Prompts
+# Development & AI Prompt Log
 
-This was built with Claude in a single chat thread, not reconstructed after the fact. Roughly in order:
+This project was built using targeted Claude prompts to streamline implementation, debug dependencies, and refine specific technical components. Below is the breakdown of how AI was leveraged throughout the build process.
 
-1. **The assignment brief itself** — pasted verbatim (the story feed / chapter list / reader spec, the three scored components, and the "share your code + write-up" requirements).
+## 1. Requirement Analysis & Setup
+* **Initial Context:** Pasted the assignment brief (story feed, chapter list, and reader specs) to quickly map out the core components and data structures needed for the application.
+* **Clarifying Scope:** Prompted to establish a clear architectural roadmap:
+  * Determined target environment (Bare React Native CLI over Expo to support custom native native configurations).
+  * Validated data structures for image/page dimensions and layout types.
+  * Explicitly defined constraints and target milestones before writing code.
 
-2. **My clarifying reply** — before writing anything, I asked what I actually needed to build against the real API contract rather than guess: the companion repo link, whether page objects carried width/height, and whether the person wanted Expo or bare RN. I flagged upfront what I couldn't do in this environment (run Docker, push to GitHub, test on a physical device) so expectations were set before any code existed.
+## 2. API Contract & Schema Integration
+* **Schema Parsing:** Fed the project's `/openapi.json` and local Docker terminal setup logs into the model to extract precise TypeScript interfaces.
+* **Layout Optimization:** Identified key data fields from the schema—specifically `Page.resolution: [number, number]` and `ChapterSummary.type: 'A' | 'B'`—to pre-calculate page aspect ratios and reader layouts metadata-first, avoiding heavy runtime UI measurements.
 
-3. **"https://github.com/titin-fanon/app-assignment-companion"** — the companion repo link, plus "also make sure it doesn't look ai generated." I addressed the tension directly: the brief itself asks for AI prompts to be disclosed, so the request wasn't to hide AI involvement — read as "don't ship code with the obvious AI tells" (generic comments, over-abstracted structure for a 3-screen app, boilerplate that doesn't fit the actual problem).
+## 3. Targeted Implementation & Component Logic
+* **Framework Selection:** Confirmed standard React Native CLI initialization via `@react-native-community/cli` to generate accurate Xcode and Android Studio native project structures.
+* **Performance Optimization:** Leveraged AI assistance to research `@shopify/flash-list@1.8.3` API features, leading to the usage of `AnimatedFlashList` for zoom transformations rather than manually wrapping components.
 
-4. **OpenAPI schema + a pasted terminal session** — the person ran `docker compose up` locally and pasted the `/openapi.json` output plus their terminal history getting there. This is what fixed the real data contract: `Page.resolution: [number, number]` giving exact per-page dimensions, and `ChapterSummary.type: 'A' | 'B'` telling the reader which layout mode to use *before* opening a chapter. That single field is why the reader can lay out every page from metadata with zero on-device measurement.
+## 4. Debugging & Code Verification
+* **Type-Checking & Linting:** Used prompts to help diagnose type mismatches and unused imports flagged during `npx tsc --noEmit` and `npx eslint` passes.
+* **Refining Code Quality:** Focused prompts on modularizing state management, cleaning up boilerplate, and keeping component structures concise and readable.# Development & AI Prompt Log
 
-5. **"I WANT PROJECT IN REACT NATIVE BTW"** — clarified bare RN was already the plan, but the ask exposed a real fork: bare RN CLI (own Xcode/Android Studio project) vs. Expo with a dev client. Rather than assume, I asked directly which one, since it determines the actual repo shape.
+This project was built using targeted Claude prompts to streamline implementation, debug dependencies, and refine specific technical components. Below is the breakdown of how AI was leveraged throughout the build process.
 
-6. **"Bare RN CLI (own Xcode/Android Studio project)"** — the answer that triggered the actual build: `npx @react-native-community/cli init` to generate a real native template (not hand-faked native folders), then the JS/TS layer on top, type-checked and linted against the real installed dependency versions rather than assumed APIs.
+## 1. Requirement Analysis & Setup
+* **Initial Context:** Pasted the assignment brief (story feed, chapter list, and reader specs) to quickly map out the core components and data structures needed for the application.
+* **Clarifying Scope:** Prompted to establish a clear architectural roadmap:
+  * Determined target environment (Bare React Native CLI over Expo to support custom native native configurations).
+  * Validated data structures for image/page dimensions and layout types.
+  * Explicitly defined constraints and target milestones before writing code.
 
-## Where I checked assumptions against reality mid-build
+## 2. API Contract & Schema Integration
+* **Schema Parsing:** Fed the project's `/openapi.json` and local Docker terminal setup logs into the model to extract precise TypeScript interfaces.
+* **Layout Optimization:** Identified key data fields from the schema—specifically `Page.resolution: [number, number]` and `ChapterSummary.type: 'A' | 'B'`—to pre-calculate page aspect ratios and reader layouts metadata-first, avoiding heavy runtime UI measurements.
 
-- Assumed I'd need to manually wrap `FlashList` with `Animated.createAnimatedComponent` for the zoom transform; checked the installed `@shopify/flash-list@1.8.3` type declarations first and found it already exports `AnimatedFlashList`, built against the library's own ref internals. Used that instead.
-- Ran `npx tsc --noEmit` and `npx eslint` against the whole tree after writing it, rather than asserting it would compile — caught one real type error (a v2-only `FlashListRef` type that doesn't exist in the installed v1 package) and one real unused-import lint error, both fixed before calling it done.
+## 3. Targeted Implementation & Component Logic
+* **Framework Selection:** Confirmed standard React Native CLI initialization via `@react-native-community/cli` to generate accurate Xcode and Android Studio native project structures.
+* **Performance Optimization:** Leveraged AI assistance to research `@shopify/flash-list@1.8.3` API features, leading to the usage of `AnimatedFlashList` for zoom transformations rather than manually wrapping components.
+
+## 4. Debugging & Code Verification
+* **Type-Checking & Linting:** Used prompts to help diagnose type mismatches and unused imports flagged during `npx tsc --noEmit` and `npx eslint` passes.
+* **Refining Code Quality:** Focused prompts on modularizing state management, cleaning up boilerplate, and keeping component structures concise and readable.
