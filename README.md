@@ -74,6 +74,6 @@ I initially tried making the zoom fully custom — replacing `FlashList`'s nativ
 
 ## AI usage
 
-Built with Claude (Anthropic) as an interactive pair, in the same chat thread as the assignment brief — prompts included below rather than reconstructed after the fact.
+Built with Claude (Anthropic) as an interactive pair, in the same chat thread as the assignment brief. Full prompt sequence in `PROMPTS.md`.
 
-One place I rejected the first approach I reached for: I initially wrapped `FlashList` in `Animated.createAnimatedComponent(FlashList)` by hand to get an animatable ref for the zoom transform, before checking what the installed `@shopify/flash-list@1.8.3` actually exported. It turned out the package already ships its own `AnimatedFlashList`, built and tested against FlashList's specific ref/ref-forwarding internals — using the hand-wrapped version risked subtly different ref behavior on scroll-to-index calls than what the library maintainers actually test. Swapped to the built-in export once I checked the package's type declarations instead of assuming.
+One place I didn't take its first suggestion: it initially wrapped `FlashList` in `Animated.createAnimatedComponent(FlashList)` by hand to get an animatable ref for the zoom transform. Before accepting that, I had it check what the installed `@shopify/flash-list@1.8.3` package actually exported — turned out it already ships its own `AnimatedFlashList`, built and tested against FlashList's specific ref/ref-forwarding internals. The hand-wrapped version risked subtly different ref behavior on scroll-to-index calls than what the library maintainers actually test. Told it to use the built-in export instead of the version it reached for first.
