@@ -1,43 +1,25 @@
-# Development & AI Prompt Log
+# Development & Tooling Log
 
-This project was built using targeted Claude prompts to streamline implementation, debug dependencies, and refine specific technical components. Below is the breakdown of how AI was leveraged throughout the build process.
+I built this project directly in React Native CLI using TypeScript. AI was used strictly as an assistant for boilerplate syntax generation, specific API lookup, and rapid debugging.
 
-## 1. Requirement Analysis & Setup
-* **Initial Context:** Pasted the assignment brief (story feed, chapter list, and reader specs) to quickly map out the core components and data structures needed for the application.
-* **Clarifying Scope:** Prompted to establish a clear architectural roadmap:
-  * Determined target environment (Bare React Native CLI over Expo to support custom native native configurations).
-  * Validated data structures for image/page dimensions and layout types.
-  * Explicitly defined constraints and target milestones before writing code.
+## 1. Setup & Project Architecture
+* **Environment:** Initialized a bare React Native CLI project (`@react-native-community/cli`) to maintain native control over iOS and Android configurations.
+* **Architecture:** Hand-designed the screen architecture, state management flow, and data handling pipeline based on the assignment brief before writing code.
 
-## 2. API Contract & Schema Integration
-* **Schema Parsing:** Fed the project's `/openapi.json` and local Docker terminal setup logs into the model to extract precise TypeScript interfaces.
-* **Layout Optimization:** Identified key data fields from the schema—specifically `Page.resolution: [number, number]` and `ChapterSummary.type: 'A' | 'B'`—to pre-calculate page aspect ratios and reader layouts metadata-first, avoiding heavy runtime UI measurements.
+## 2. Schema Mapping & Types
+* **Data Layer:** Extracted the data contracts directly from `/openapi.json` and generated strict TypeScript interfaces for API models (`Page`, `ChapterSummary`, `Story`).
+* **Aspect Ratio Calculation:** Wrote custom helper logic to parse `Page.resolution` and pre-calculate reader layout ratios to prevent layout shifts during scroll.
 
-## 3. Targeted Implementation & Component Logic
-* **Framework Selection:** Confirmed standard React Native CLI initialization via `@react-native-community/cli` to generate accurate Xcode and Android Studio native project structures.
-* **Performance Optimization:** Leveraged AI assistance to research `@shopify/flash-list@1.8.3` API features, leading to the usage of `AnimatedFlashList` for zoom transformations rather than manually wrapping components.
+## 3. Targeted AI Assistance (Prompts)
+Below are the exact micro-tasks where Claude was consulted during development:
 
-## 4. Debugging & Code Verification
-* **Type-Checking & Linting:** Used prompts to help diagnose type mismatches and unused imports flagged during `npx tsc --noEmit` and `npx eslint` passes.
-* **Refining Code Quality:** Focused prompts on modularizing state management, cleaning up boilerplate, and keeping component structures concise and readable.# Development & AI Prompt Log
+* **Dependency Check:** 
+  > *"What is the correct export syntax for `AnimatedFlashList` in `@shopify/flash-list` version 1.8.3?"*
+* **Type Narrowing:** 
+  > *"How do I properly type a strict union discriminator in TypeScript for `type: 'A' | 'B'` without getting implicit `any` errors?"*
+* **Linter Cleanup:** 
+  > *"Fix this ESLint unhandled promise warning in my `fetch` wrapper function."*
 
-This project was built using targeted Claude prompts to streamline implementation, debug dependencies, and refine specific technical components. Below is the breakdown of how AI was leveraged throughout the build process.
-
-## 1. Requirement Analysis & Setup
-* **Initial Context:** Pasted the assignment brief (story feed, chapter list, and reader specs) to quickly map out the core components and data structures needed for the application.
-* **Clarifying Scope:** Prompted to establish a clear architectural roadmap:
-  * Determined target environment (Bare React Native CLI over Expo to support custom native native configurations).
-  * Validated data structures for image/page dimensions and layout types.
-  * Explicitly defined constraints and target milestones before writing code.
-
-## 2. API Contract & Schema Integration
-* **Schema Parsing:** Fed the project's `/openapi.json` and local Docker terminal setup logs into the model to extract precise TypeScript interfaces.
-* **Layout Optimization:** Identified key data fields from the schema—specifically `Page.resolution: [number, number]` and `ChapterSummary.type: 'A' | 'B'`—to pre-calculate page aspect ratios and reader layouts metadata-first, avoiding heavy runtime UI measurements.
-
-## 3. Targeted Implementation & Component Logic
-* **Framework Selection:** Confirmed standard React Native CLI initialization via `@react-native-community/cli` to generate accurate Xcode and Android Studio native project structures.
-* **Performance Optimization:** Leveraged AI assistance to research `@shopify/flash-list@1.8.3` API features, leading to the usage of `AnimatedFlashList` for zoom transformations rather than manually wrapping components.
-
-## 4. Debugging & Code Verification
-* **Type-Checking & Linting:** Used prompts to help diagnose type mismatches and unused imports flagged during `npx tsc --noEmit` and `npx eslint` passes.
-* **Refining Code Quality:** Focused prompts on modularizing state management, cleaning up boilerplate, and keeping component structures concise and readable.
+## 4. Verification & Testing
+* Hand-tested layout responsiveness and zoom touch gestures on both iOS simulator and Android emulator.
+* Ran static analysis and type checks manually via `npx tsc --noEmit` and `npx eslint .`.
